@@ -18,7 +18,22 @@ import commands
 # +++your code here+++
 # Write functions and modify main() to call them
 
-
+def zipit(path , zip_filename):
+	cmd = 'zip -j '+zip_filename+' '
+	filenames = os.listdir(path)
+	for filename in filenames:
+		special = is_special(filename)
+		if special:
+		  cmd = cmd+ os.path.abspath(os.path.join(path,filename)) + ' '
+		  print filename, ' is special'
+		else:
+			print 'Skipping ', filename
+	
+	print 'Executing '+cmd
+	(status, output) = commands.getstatusoutput(cmd)
+		
+def is_special(filename):
+	return re.search(r'__\w__', filename)
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -48,6 +63,12 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
+  for dir in args:
+  	  if tozip:
+  	  	  zipit(dir, tozip)
+  	  elif todir:
+  	  	  copyit(dir, todir)
+  	  	  
   # +++your code here+++
   # Call your functions
   

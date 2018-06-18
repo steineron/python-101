@@ -15,7 +15,9 @@ def list_dir_cmd(dir):
 		cmd = 'ls -l '+dir
 		(status,output) = commands.getstatusoutput(cmd)
 		if status:
-			print 'the was an error'
+			print 'the was an error', output
+			sys.stderr.write('there was an error ' +output+'\n')
+			sys.exit(-1)
 		else:
 			print output
 
