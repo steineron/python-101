@@ -18,6 +18,17 @@ import commands
 # +++your code here+++
 # Write functions and modify main() to call them
 
+		
+def is_special(filename):
+	print 'inspecting', filename
+	return re.search(r'__\w+__', filename)
+
+
+def get_special_file_names(dir):
+	filenames = os.listdir(dir)
+	print 'files:', filenames
+	return [os.path.abspath(os.path.join(dir,filename)) for filename in filenames if is_special(filename)]
+	
 def zipit(path , zip_filename):
 	cmd = 'zip -j '+zip_filename+' '
 	filenames = os.listdir(path)
@@ -31,9 +42,6 @@ def zipit(path , zip_filename):
 	
 	print 'Executing '+cmd
 	(status, output) = commands.getstatusoutput(cmd)
-		
-def is_special(filename):
-	return re.search(r'__\w__', filename)
 
 def main():
   # This basic command line argument parsing code is provided.
